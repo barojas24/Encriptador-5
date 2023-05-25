@@ -1,0 +1,141 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script type="text/javascript">
+			const soloLetras =/^[a-z !ñ]+$/;
+			function copiarTxt(){
+				var text1=document.getElementById("txt1");
+				var text2=document.getElementById("txt2");
+				var cont=text2.value;
+
+				if(cont.length>0){
+					 text1.value=cont;
+
+					document.getElementById("displayName").innerHTML =cont;
+					document.getElementById("txt2").value="";
+
+				}else{
+					document.getElementById("displayName").innerHTML ="Sin texto";
+				}
+			}
+			function encriptar(){
+				document.getElementById("displayR").innerHTML="";
+				document.getElementById("displayName").innerHTML="";
+				let text1=document.getElementById("txt1").value;
+				let text2=document.getElementById("txt2");
+
+				let res1="";
+				console.log(text1);
+				var OK=soloLetras.exec(text1);
+
+				if(text1.length>0)
+				{
+					if(!OK){
+						console.log("no OK");
+						document.getElementById("displayR").innerHTML="El texto no cumple la estructura.";
+					}else
+						{
+							let encri= String(text1);
+							var tam=encri.length;
+							for(i=0;i<tam;i++)
+							{
+								
+								//alert(i + ': ' + encri.charAt(i));
+								if(encri.charAt(i)=='a'){
+									encri.replace(encri.charAt(i),'ai');
+									res1+='ai';
+								}else if(encri.charAt(i)=='e'){
+									encri.replace(encri.charAt(i),'enter');
+									res1+='enter';
+								}else if(encri.charAt(i)=='i'){
+									encri.replace(encri.charAt(i),'imes');
+									res1+='imes';
+								}else if(encri.charAt(i)=='o'){
+									encri.replace(encri.charAt(i),'ober');
+									res1+='ober';
+								}else if(encri.charAt(i)=='u'){
+									encri.replace(encri.charAt(i),'ufat');
+									res1+='ufat';
+								}else{
+									res1+=encri.charAt(i);
+								}
+							}
+
+							text2.value=res1;
+							console.log(res1);
+							//document.getElementById("txt1").value="";
+						}
+
+				}else{
+					console.log("entro en else");
+					document.getElementById("displayR").innerHTML="Campo requerido";
+				}
+
+				//document.getElementById("txt1").value="";
+			}
+			function desencriptar(){
+				document.getElementById("displayR").innerHTML="";
+				document.getElementById("displayName").innerHTML="";
+				let text1=document.getElementById("txt1").value;
+				let text2=document.getElementById("txt2");
+				var OK=soloLetras.exec(text1);
+
+
+				if(text1.length>0){
+					if(!OK){
+						console.log("no OK");
+						document.getElementById("displayR").innerHTML="El texto no cumple la estructura.";
+					}else
+						{
+							let encri1= text1.split(" ");
+							let preresultado=[];
+
+							for(let palabra of encri1){
+							palabra=palabra.replaceAll("ai","a");
+							palabra=palabra.replaceAll("enter","e");
+							palabra=palabra.replaceAll("imes","i");
+							palabra=palabra.replaceAll("ober","o");
+							palabra=palabra.replaceAll("ufat","u");
+							preresultado.push(palabra);
+
+							}
+							const res=preresultado.join('');
+
+							text2.value=res;
+						}
+
+				}else{
+					console.log("entro en else");
+					document.getElementById("displayR").innerHTML="Campo requerido";
+				}
+
+			}
+
+		</script>
+		<title>Encriptador</title>
+		<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+	</head>
+	<body>
+		<h1>Encriptador</h1>
+		<div class="wrapper">
+			<div class="box"> 
+				<input type="text" id="txt1" name="txt1" placeholder="Ingrese el texto aquí">
+				<p id="nota">*Solo letras munúsculas y sin acentos</p>
+				<p id="displayR"></p>
+				<button class="button" type="button" onclick="encriptar()">Encriptar</button>
+				<button class="button" type="button" onclick="desencriptar()">Desencriptar</button>
+			</div>
+
+			<div class="box"> 
+				<input id="txt2" type="text" name="txt2" placeholder="Resultado">
+				<p id="displayName"></p>
+				<button class="button" type="button" onclick="copiarTxt()">Copiar</button>
+
+			</div>
+		</div>
+	</body>
+	<footer>
+		
+	</footer>
+</html>
